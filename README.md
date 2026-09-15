@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dragons of Mugloar
 
-## Getting Started
+A web front end for the [Dragons of Mugloar](https://dragonsofmugloar.com) game. Start a game, take quests from the message board, buy items in the shop, and try to beat your high score before you run out of lives.
 
-First, run the development server:
+Built with Next.js (App Router), React, Zustand, Tailwind CSS and shadcn/ui on Base UI.
+
+## Prerequisites
+
+- **Node.js 20.9 or newer** (required by Next.js 16)
+- **pnpm 10**. The exact version is pinned in `package.json` under `packageManager`. The easiest way to get it is Corepack, which ships with Node:
+
+  ```bash
+  corepack enable
+  ```
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd dragons-of-mugloar-fe
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+No environment variables are needed. The app talks directly to the public API at `https://dragonsofmugloar.com/api/v2` (set in `src/services/game.service.ts`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Running the app
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Development
 
-## Learn More
+```bash
+pnpm dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000). The page reloads as you edit files.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Production build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm build
+pnpm start
+```
 
-## Deploy on Vercel
+`pnpm start` serves the build on [http://localhost:3000](http://localhost:3000).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command             | What it does                            |
+| ------------------- | --------------------------------------- |
+| `pnpm dev`          | Start the development server            |
+| `pnpm build`        | Create a production build               |
+| `pnpm start`        | Serve the production build              |
+| `pnpm lint`         | Run ESLint                              |
+| `pnpm format`       | Format all files with Prettier          |
+| `pnpm format:check` | Check formatting without changing files |
+
+To type-check without building, run `pnpm exec tsc --noEmit`.
+
+## Project structure
+
+```
+src/
+  app/          Root layout, page and global styles
+  components/   Game UI (quest board, shop, status bar, dialogs, toasts)
+    ui/         shadcn/ui components
+  lib/          Message decoding, probability risk tiers, helpers
+  providers/    Game store React context
+  services/     API client and response types
+  stores/       Zustand game store (state and actions)
+```
